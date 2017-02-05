@@ -5,6 +5,7 @@ import com.egyed.adam.endlesshiker.engine.GameLogic;
 import com.egyed.adam.endlesshiker.engine.MainWindow;
 import com.egyed.adam.endlesshiker.engine.graphics.Camera;
 import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
+import com.egyed.adam.endlesshiker.game.world.World;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -24,7 +25,7 @@ public class EHGame implements GameLogic {
 
   private final Renderer renderer;
 
-  private GameItem[] gameItems;
+  private World world;
 
   private Camera camera;
 
@@ -48,6 +49,9 @@ public class EHGame implements GameLogic {
   public EHGame() {
     renderer = new Renderer();
     camera = new Camera();
+
+    world = new World();
+
     cameraInc = new Vector3f(0,0,0);
     cameraRotInc = new Vector3f(0,0,0);
   }
@@ -59,15 +63,10 @@ public class EHGame implements GameLogic {
 
     camera.setPosition(0,0,1);
 
-    ArrayList<GameItem> itemList = new ArrayList<>();
-
-    itemList.add(makeCube());
-
-    gameItems = new GameItem[itemList.size()];
-
-    gameItems = itemList.toArray(gameItems);
-
     glClearColor(0.45f, 0.5f, 0.5f, 0.7f);
+
+    world.init();
+
   }
 
   @Override
@@ -156,7 +155,7 @@ public class EHGame implements GameLogic {
   @Override
   public void update(float interval) {
 
-    for (GameItem gameItem : gameItems) {
+    for (GameItem gameItem : world.getGameItems()) {
       gameItem.addRotation(0f, 0f, 0f);
     }
 
@@ -177,72 +176,16 @@ public class EHGame implements GameLogic {
   @Override
   public void render(MainWindow mainWindow) {
 
-    renderer.render(mainWindow, camera, gameItems);
+    renderer.render(mainWindow, camera, world.getGameItems());
 
   }
 
   @Override
   public void cleanup() {
     renderer.cleanup();
-    for (GameItem gameItem : gameItems) {
+    for (GameItem gameItem : world.getGameItems()) {
       if (gameItem!=null) gameItem.getMesh().cleanUp();
     }
-  }
-
-  private GameItem makeCube() {
-
-    float[] positions = new float[] {
-
-        // VO
-        -0.5f,  0.5f,  0.5f,
-        // V1
-        -0.5f, -0.5f,  0.5f,
-        // V2
-        0.5f, -0.5f,  0.5f,
-        // V3
-        0.5f,  0.5f,  0.5f,
-        // V4
-        -0.5f,  0.5f, -0.5f,
-        // V5
-        0.5f,  0.5f, -0.5f,
-        // V6
-        -0.5f, -0.5f, -0.5f,
-        // V7
-        0.5f, -0.5f, -0.5f,
-
-    };
-
-    float[] colours = new float[]{
-        0.5f, 0.0f, 0.0f,
-        0.0f, 0.5f, 0.0f,
-        0.0f, 0.0f, 0.5f,
-        0.0f, 0.5f, 0.5f,
-        0.5f, 0.0f, 0.0f,
-        0.0f, 0.5f, 0.0f,
-        0.0f, 0.0f, 0.5f,
-        0.0f, 0.5f, 0.5f,
-    };
-
-    int[] indices = new int[] {
-
-
-
-        // Front face
-        0, 3, 1, 3, 2, 1,
-        // Top Face
-        4, 5, 0, 5, 3, 0,
-        // Right face
-        3, 5, 2, 5, 7, 2,
-        // Left face
-        4, 0, 6, 0, 1, 6,
-        // Bottom face
-        6, 7, 1, 7, 2, 1,
-        // Back face
-        4, 5, 6, 5, 7, 6,
-
-    };
-
-    return new GameItem(new Mesh(positions, colours, indices));
   }
 
 }
