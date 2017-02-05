@@ -61,6 +61,7 @@ public class Renderer {
 
         shaderProgram.createUniform("projectionMatrix");
         shaderProgram.createUniform("modelViewMatrix");
+        shaderProgram.createUniform("texture_sampler");
 
     }
 
@@ -86,7 +87,7 @@ public class Renderer {
         // Update projection Matrix
         Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
         shaderProgram.setUniform("projectionMatrix", projectionMatrix);
-
+        shaderProgram.setUniform("texture_sampler", 0);
         // Update view Matrix
         Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
