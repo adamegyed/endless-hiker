@@ -56,13 +56,13 @@ public class Player {
 
 
         // Front face
-        0, 3, 1, 3, 2, 1,
+        3, 0, 1, 3, 1, 2,
         // Top Face
-        4, 5, 0, 5, 3, 0,
+        5, 4, 0, 5, 0, 3,
         // Right face
-        3, 5, 2, 5, 7, 2,
+        5, 3, 2, 5, 2, 7,
         // Left face
-        4, 0, 6, 0, 1, 6,
+        0, 4, 6, 0, 6, 1,
         // Bottom face
         6, 7, 1, 7, 2, 1,
         // Back face
@@ -72,4 +72,5 @@ public class Player {
 
     return new GameItem(new Mesh(positions, colours, indices));
   }
+
 }
