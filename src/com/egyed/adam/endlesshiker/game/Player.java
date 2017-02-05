@@ -2,6 +2,7 @@ package com.egyed.adam.endlesshiker.game;
 
 import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
+import com.egyed.adam.endlesshiker.engine.graphics.Texture;
 
 /**
  * Created by Adam on 2/4/17.
@@ -69,8 +70,8 @@ public class Player {
         4, 5, 6, 5, 7, 6,
 
     };
-
-    return new GameItem(new Mesh(positions, colours, indices));
+    Texture texture = new Texture("file_name")
+    return new GameItem(new Mesh(positions, colours, indices, texture)); // FIX!!! Need textcoords instead of colours
   }
 
 }

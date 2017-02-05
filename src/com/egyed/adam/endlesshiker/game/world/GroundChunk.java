@@ -2,6 +2,7 @@ package com.egyed.adam.endlesshiker.game.world;
 
 import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
+import com.egyed.adam.endlesshiker.engine.graphics.Texture;
 
 /**
  * Created by Adam on 2/4/17.
@@ -38,8 +39,8 @@ public class GroundChunk extends GameItem {
         //View from the top
         0,1,2, 1, 3, 2,
     };
-
-    Mesh mesh  = new Mesh(positions, colours, indices);
+    Texture texture = new Texture("file_name")
+    Mesh mesh  = new Mesh(positions, colours, indices, texture); // FIX!!! Need textCoords instead of colours
 
     GroundChunk gc = new GroundChunk(mesh);
     gc.setPosition(0,-0.5f,0);
