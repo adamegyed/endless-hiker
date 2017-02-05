@@ -12,6 +12,8 @@ public class World {
 
   private Player player;
 
+  private GameItem ground;
+
   private GameItem[] gameItems;
 
   public World() {
@@ -19,15 +21,15 @@ public class World {
   }
 
   public void init() {
-    player = new Player();
-
-
     ArrayList<GameItem> itemList = new ArrayList<>();
 
+    player = new Player();
     itemList.add(player.getGameItem());
 
-    gameItems = new GameItem[itemList.size()];
+    ground = GroundChunk.createFlat();
+    itemList.add(ground);
 
+    gameItems = new GameItem[itemList.size()];
     gameItems = itemList.toArray(gameItems);
   }
 

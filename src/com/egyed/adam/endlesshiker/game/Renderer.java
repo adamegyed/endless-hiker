@@ -72,8 +72,12 @@ public class Renderer {
         clear();
 
         if ( window.isResized() ) {
-            glViewport(0, 0, window.getWidth(), window.getHeight());
-            window.setResized(false);
+          glViewport(0, 0, window.getWidth() * 2, window.getHeight() * 2);
+          window.setResized(false);
+
+          //glMatrixMode(GL_PROJECTION);
+          //glLoadIdentity();
+          //glOrtho(0, window.getWidth(), 0, window.getHeight(), -1, 1);
         }
 
         shaderProgram.bind();
