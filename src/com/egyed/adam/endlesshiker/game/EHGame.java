@@ -209,6 +209,7 @@ public class EHGame implements GameLogic {
         -0.5f, -0.5f, -0.5f,
         // V7
         0.5f, -0.5f, -0.5f,
+
     };
 
     float[] colours = new float[]{

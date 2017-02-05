@@ -12,6 +12,7 @@
 .classpath
 out/
 *.bluej
+.idea/workspace.xml
 
 # Removed for run configurations
 # *.iml
