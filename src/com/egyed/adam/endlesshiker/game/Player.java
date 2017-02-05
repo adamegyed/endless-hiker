@@ -3,6 +3,7 @@ package com.egyed.adam.endlesshiker.game;
 import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
 import com.egyed.adam.endlesshiker.engine.graphics.Texture;
+import org.joml.Vector2f;
 
 /**
  * Created by Adam on 2/4/17.
@@ -41,6 +42,7 @@ public class Player {
 
     };
 
+    /*
     float[] colours = new float[]{
         0.5f, 0.0f, 0.0f,
         0.0f, 0.5f, 0.0f,
@@ -50,6 +52,19 @@ public class Player {
         0.0f, 0.5f, 0.0f,
         0.0f, 0.0f, 0.5f,
         0.0f, 0.5f, 0.5f,
+    };
+    */
+
+    float[] texCoords = new float[] {
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
     };
 
     int[] indices = new int[] {
@@ -70,8 +85,22 @@ public class Player {
         4, 5, 6, 5, 7, 6,
 
     };
-    Texture texture = new Texture("file_name")
-    return new GameItem(new Mesh(positions, colours, indices, texture)); // FIX!!! Need textcoords instead of colours
+    Texture texture = null;
+    try {
+      texture = new Texture("/res/texture/cube.png");
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(-1);
+    }
+    return new GameItem(new Mesh(positions, texCoords, indices, texture));
+  }
+
+  public void movePlayer(Vector2f displacement) {
+    if (displacement.x!=0 && displacement.y != 0) {
+      displacement.x *= 0.70710678118f;
+      displacement.y *= 0.70710678118f;
+    }
+    model.setPosition(model.getPosition().x + displacement.x, model.getPosition().y, model.getPosition().z + displacement.y);
   }
 
 }

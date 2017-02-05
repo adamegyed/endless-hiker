@@ -7,6 +7,7 @@ import com.egyed.adam.endlesshiker.engine.graphics.Camera;
 import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
 import com.egyed.adam.endlesshiker.game.world.World;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class EHGame implements GameLogic {
   private final Vector3f cameraInc;
   private final Vector3f cameraRotInc;
 
+  private final Vector2f movementInc;
+
   private boolean wireframe = false;
   private boolean wireframeMod = false;
   private boolean culling = true;
@@ -44,6 +47,7 @@ public class EHGame implements GameLogic {
   private static final float CAMERA_POS_STEP = 0.05f;
   private static final float CAMERA_ROT_STEP = 2.0f;
   private static final float SHIFT_STEP = 3f;
+  private static final float MOVEMENT_STEP = 0.2f;
 
 
   public EHGame() {
@@ -54,6 +58,7 @@ public class EHGame implements GameLogic {
 
     cameraInc = new Vector3f(0,0,0);
     cameraRotInc = new Vector3f(0,0,0);
+    movementInc = new Vector2f(0,0);
   }
 
 
@@ -74,6 +79,19 @@ public class EHGame implements GameLogic {
 
     cameraInc.set(0, 0, 0);
     cameraRotInc.set(0,0,0);
+    movementInc.set(0,0);
+
+
+    if (mainWindow.isKeyPressed(GLFW_KEY_W)) {
+      movementInc.y = -MOVEMENT_STEP;
+    } else if (mainWindow.isKeyPressed(GLFW_KEY_S)) {
+      movementInc.y = MOVEMENT_STEP;
+    }
+    if (mainWindow.isKeyPressed(GLFW_KEY_A)) {
+      movementInc.x = -MOVEMENT_STEP;
+    } else if (mainWindow.isKeyPressed(GLFW_KEY_D)) {
+      movementInc.x = MOVEMENT_STEP;
+    }
 
 
     if (mainWindow.isKeyPressed(GLFW_KEY_UP)) {
@@ -155,11 +173,13 @@ public class EHGame implements GameLogic {
   @Override
   public void update(float interval) {
 
+    /*
     for (GameItem gameItem : world.getGameItems()) {
       gameItem.addRotation(0f, 0f, 0f);
     }
+    */
 
-
+    world.movePlayer(movementInc);
 
     if (!slowedCamera) {
       camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);

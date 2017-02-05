@@ -28,19 +28,36 @@ public class GroundChunk extends GameItem {
 
     };
 
+    float[] texCoords = new float[] {
+
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+    };
+
+    // Replaced with texture
+    /*
     float[] colours = new float[]{
         0.01f, 0.6f, 0.0f,
         0.01f, 0.5f, 0.0f,
         0.0f, 0.4f, 0.01f,
         0.01f, 0.5f, 0.0f,
     };
+    */
 
     int[] indices = new int[] {
         //View from the top
         0,1,2, 1, 3, 2,
     };
-    Texture texture = new Texture("file_name")
-    Mesh mesh  = new Mesh(positions, colours, indices, texture); // FIX!!! Need textCoords instead of colours
+    Texture texture = null;
+    try {
+      texture = new Texture("/res/texture/grasstile.png");
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(-1);
+    }
+    Mesh mesh  = new Mesh(positions, texCoords, indices, texture); // FIX!!! Need textCoords instead of colours
 
     GroundChunk gc = new GroundChunk(mesh);
     gc.setPosition(0,-0.5f,0);

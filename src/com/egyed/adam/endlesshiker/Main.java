@@ -11,7 +11,7 @@ public class Main {
         GameLogic gameLogic = new com.egyed.adam.endlesshiker.game.EHGame();
 
         // Construct the Game Engine with the game logic defined by 'gameLogic', an instance of RubiksGame
-        GameEngine gameEngine = new GameEngine("Rubik's Cube", 800, 600, true, gameLogic);
+        GameEngine gameEngine = new GameEngine("Endless Hiker", 800, 600, true, gameLogic);
 
         gameEngine.start();
 
