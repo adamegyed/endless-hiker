@@ -10,10 +10,12 @@
 
 # IDE Specific
 .classpath
-.idea/
 out/
-*.iml
 *.bluej
+
+# Removed for run configurations
+# *.iml
+# .idea/
 
 # Project Specific
 !lib/
