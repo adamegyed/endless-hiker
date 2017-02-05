@@ -157,7 +157,7 @@ public class EHGame implements GameLogic {
   public void update(float interval) {
 
     for (GameItem gameItem : gameItems) {
-      gameItem.addRotation(0f, 1f, 1f);
+      gameItem.addRotation(0f, 0f, 0f);
     }
 
 
@@ -194,24 +194,6 @@ public class EHGame implements GameLogic {
     float[] positions = new float[] {
 
         // VO
-        -0.5f, -0.5f,  0.5f,
-        // V1
-        -0.5f, 0.5f,  0.5f,
-        // V2
-        -0.5f, 0.5f,  0.5f,
-        // V3
-        -0.5f,  -0.5f,  0.5f,
-        // V4
-        -0.5f, -0.5f,  0.5f,
-        // V5
-        -0.5f, 0.5f,  0.5f,
-        // V6
-        -0.5f, 0.5f,  0.5f,
-        // V7
-        -0.5f,  -0.5f,  0.5f,
-
-        /*
-        // VO
         -0.5f,  0.5f,  0.5f,
         // V1
         -0.5f, -0.5f,  0.5f,
@@ -227,7 +209,6 @@ public class EHGame implements GameLogic {
         -0.5f, -0.5f, -0.5f,
         // V7
         0.5f, -0.5f, -0.5f,
-        */
     };
 
     float[] colours = new float[]{
@@ -243,32 +224,21 @@ public class EHGame implements GameLogic {
 
     int[] indices = new int[] {
 
-        //Front
-        0,1,2, 0,3,1,
-        //Top
-        2,5,6, 2,1,5,
-        //Back
-        6,7,4, 6,5,7,
-        //Bottom
-        4,3,0, 4,7,3,
-        //Left
-        4,2,6, 4,0,2,
-        //Right
-        3,5,1, 3,7,5,
-        /*
+
+
         // Front face
-        0, 1, 3, 3, 1, 2,
+        0, 3, 1, 3, 2, 1,
         // Top Face
-        4, 0, 3, 5, 4, 3,
+        4, 5, 0, 5, 3, 0,
         // Right face
-        3, 2, 7, 5, 7, 3,
+        3, 5, 2, 5, 7, 2,
         // Left face
-        0, 6, 1, 4, 0, 6,
+        4, 0, 6, 0, 1, 6,
         // Bottom face
-        6, 1, 2, 7, 6, 2,
+        6, 7, 1, 7, 2, 1,
         // Back face
-        4, 6, 7, 5, 4, 7,
-        */
+        4, 5, 6, 5, 7, 6,
+
     };
 
     return new GameItem(new Mesh(positions, colours, indices));
