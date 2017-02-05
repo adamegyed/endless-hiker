@@ -1,4 +1,4 @@
-package com.egyed.adam.rubikscube.engine.graphics;
+package com.egyed.adam.endlesshiker.engine.graphics;
 
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;

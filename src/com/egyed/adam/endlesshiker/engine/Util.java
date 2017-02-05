@@ -1,7 +1,6 @@
-package com.egyed.adam.endlesshiker;
+package com.egyed.adam.endlesshiker.engine;
 
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 

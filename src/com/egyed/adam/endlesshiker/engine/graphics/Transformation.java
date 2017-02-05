@@ -1,6 +1,6 @@
-package com.egyed.adam.rubikscube.engine.graphics;
+package com.egyed.adam.endlesshiker.engine.graphics;
 
-import com.egyed.adam.rubikscube.engine.GameItem;
+import com.egyed.adam.endlesshiker.engine.GameItem;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 

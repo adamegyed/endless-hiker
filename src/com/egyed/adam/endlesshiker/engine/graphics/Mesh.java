@@ -1,4 +1,4 @@
-package com.egyed.adam.rubikscube.engine.graphics;
+package com.egyed.adam.endlesshiker.engine.graphics;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

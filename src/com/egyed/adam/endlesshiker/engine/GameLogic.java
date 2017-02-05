@@ -1,4 +1,4 @@
-package com.egyed.adam.endlesshiker;
+package com.egyed.adam.endlesshiker.engine;
 
 
 

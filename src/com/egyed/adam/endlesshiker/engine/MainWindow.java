@@ -1,4 +1,4 @@
-package com.egyed.adam.endlesshiker;
+package com.egyed.adam.endlesshiker.engine;
 
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -51,7 +51,7 @@ public class MainWindow {
         glfwSetErrorCallback(errorCallback);
 
         // Initialize GLFW
-        if (glfwInit() != GL11.GL_TRUE) {
+        if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
@@ -93,7 +93,7 @@ public class MainWindow {
             public void invoke(long window, int key, int scancode, int action, int mods) {
 
                 if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                    glfwSetWindowShouldClose(windowHandle, GL_TRUE);
+                    glfwSetWindowShouldClose(windowHandle, true);
                 }
                 if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
                     shouldCameraReset = true;
@@ -148,7 +148,7 @@ public class MainWindow {
     }
 
     public boolean windowShouldClose() {
-        return glfwWindowShouldClose(windowHandle) == GL_TRUE;
+        return glfwWindowShouldClose(windowHandle);
     }
 
     public String getTitle() {

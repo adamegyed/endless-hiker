@@ -1,6 +1,6 @@
-package com.egyed.adam.endlesshiker;
+package com.egyed.adam.endlesshiker.engine;
 
-import com.egyed.adam.rubikscube.engine.graphics.Mesh;
+import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -86,10 +86,10 @@ public class GameItem {
             Matrix4f xRotation = new Matrix4f().identity();
             float sinAlpha = (float) Math.sin(rotateXAngle);
             float cosAlpha = (float) Math.cos(rotateXAngle);
-            xRotation.m11 = cosAlpha;
-            xRotation.m12 = -sinAlpha;
-            xRotation.m21 = sinAlpha;
-            xRotation.m22 = cosAlpha;
+            xRotation.m11(cosAlpha);
+            xRotation.m12(-sinAlpha);
+            xRotation.m21(sinAlpha);
+            xRotation.m22(cosAlpha);
 
             rotationUpdate.mul(xRotation);
         }
@@ -97,10 +97,10 @@ public class GameItem {
             Matrix4f yRotation = new Matrix4f().identity();
             float sinBeta = (float) Math.sin(rotateYAngle);
             float cosBeta = (float) Math.cos(rotateYAngle);
-            yRotation.m00 = cosBeta;
-            yRotation.m02 = sinBeta;
-            yRotation.m20 = -sinBeta;
-            yRotation.m22 = cosBeta;
+            yRotation.m00(cosBeta);
+            yRotation.m02(sinBeta);
+            yRotation.m20(-sinBeta);
+            yRotation.m22(cosBeta);
 
             rotationUpdate.mul(yRotation);
         }
@@ -108,10 +108,10 @@ public class GameItem {
             Matrix4f zRotation = new Matrix4f().identity();
             float sinGamma = (float) Math.sin(rotateZAngle);
             float cosGamma = (float) Math.cos(rotateZAngle);
-            zRotation.m00 = cosGamma;
-            zRotation.m01 = -sinGamma;
-            zRotation.m10 = sinGamma;
-            zRotation.m11 = cosGamma;
+            zRotation.m00(cosGamma);
+            zRotation.m01(-sinGamma);
+            zRotation.m10(sinGamma);
+            zRotation.m11(cosGamma);
 
             rotationUpdate.mul(zRotation);
         }
