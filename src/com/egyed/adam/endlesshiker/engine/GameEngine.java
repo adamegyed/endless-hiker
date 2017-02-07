@@ -12,7 +12,7 @@ public class GameEngine implements Runnable{
     // Target Frames per Second
     // Frames can be rendered faster than updates
     // can be more inconsistent than updates
-    public static final int TARGET_FPS = 75;
+    public static final int TARGET_FPS = 60;
 
     // Target Updates per Second
     // Updates are calculations on motion, player controls, physics, etc

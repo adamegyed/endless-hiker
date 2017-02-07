@@ -11,8 +11,13 @@ import org.joml.Vector2f;
 public class Player {
   GameItem model;
 
+  boolean inJump;
+  float vVelocity;
+
   public Player() {
     model = makeCube();
+    inJump = false;
+    vVelocity = 0f;
   }
 
   public GameItem getGameItem() {
@@ -101,6 +106,23 @@ public class Player {
       displacement.y *= 0.70710678118f;
     }
     model.setPosition(model.getPosition().x + displacement.x, model.getPosition().y, model.getPosition().z + displacement.y);
+  }
+
+  public void startJump() {
+    if (!inJump) {
+      vVelocity = 0.8f;
+      inJump = true;
+    }
+  }
+  public void jumpTick() {
+    if (inJump) {
+      model.getPosition().y += vVelocity;
+      vVelocity -= 0.08f;
+      if (model.getPosition().y<0) {
+        inJump = false;
+        model.getPosition().y = 0;
+      }
+    }
   }
 
 }

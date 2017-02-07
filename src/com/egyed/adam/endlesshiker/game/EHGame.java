@@ -34,6 +34,7 @@ public class EHGame implements GameLogic {
   private final Vector3f cameraRotInc;
 
   private final Vector2f movementInc;
+  private boolean jumpRequested;
 
   private boolean wireframe = false;
   private boolean wireframeMod = false;
@@ -49,12 +50,17 @@ public class EHGame implements GameLogic {
   private static final float SHIFT_STEP = 3f;
   private static final float MOVEMENT_STEP = 0.2f;
 
+  private static final Vector3f CAMERA_DEFAULT_POS = new Vector3f(0,7f,7f);
+  private static final Vector3f CAMERA_DEFAULT_ROT = new Vector3f(45f,0,0);
+
+
 
   public EHGame() {
     renderer = new Renderer();
     camera = new Camera();
 
     world = new World();
+    jumpRequested = false;
 
     cameraInc = new Vector3f(0,0,0);
     cameraRotInc = new Vector3f(0,0,0);
@@ -66,9 +72,9 @@ public class EHGame implements GameLogic {
   public void init(MainWindow mainWindow) throws Exception {
     renderer.init(mainWindow);
 
-    camera.setPosition(0,0,1);
+    resetCamera();
 
-    glClearColor(0.45f, 0.5f, 0.5f, 0.7f);
+    glClearColor(0.3f, 0.5f, 0.65f, 0.7f);
 
     world.init();
 
@@ -92,6 +98,8 @@ public class EHGame implements GameLogic {
     } else if (mainWindow.isKeyPressed(GLFW_KEY_D)) {
       movementInc.x = MOVEMENT_STEP;
     }
+
+    jumpRequested = mainWindow.isKeyPressed(GLFW_KEY_E);
 
 
     if (mainWindow.isKeyPressed(GLFW_KEY_UP)) {
@@ -160,12 +168,8 @@ public class EHGame implements GameLogic {
     }
     else if (mainWindow.isKeyReleased(GLFW_KEY_LEFT_SHIFT)) slowedCameraMod = false;
 
-
-
-
     if (mainWindow.getShouldCameraReset()) {
-      camera.setPosition(0,0,1);
-      camera.setRotation(0,0,0);
+      resetCamera();
       mainWindow.setShouldCameraReset(false);
     }
   }
@@ -179,7 +183,11 @@ public class EHGame implements GameLogic {
     }
     */
 
-    world.movePlayer(movementInc);
+    if (jumpRequested) {
+      world.getPlayer().startJump();
+    }
+    world.getPlayer().movePlayer(movementInc);
+    world.getPlayer().jumpTick();
 
     if (!slowedCamera) {
       camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
@@ -206,6 +214,11 @@ public class EHGame implements GameLogic {
     for (GameItem gameItem : world.getGameItems()) {
       if (gameItem!=null) gameItem.getMesh().cleanUp();
     }
+  }
+
+  private void resetCamera() {
+    camera.setPosition(CAMERA_DEFAULT_POS);
+    camera.setRotation(CAMERA_DEFAULT_ROT);
   }
 
 }
