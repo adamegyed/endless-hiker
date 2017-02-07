@@ -6,13 +6,9 @@ import com.egyed.adam.endlesshiker.engine.MainWindow;
 import com.egyed.adam.endlesshiker.engine.Util;
 import com.egyed.adam.endlesshiker.engine.graphics.Camera;
 import com.egyed.adam.endlesshiker.engine.graphics.ShaderProgram;
-import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
 import com.egyed.adam.endlesshiker.engine.graphics.Transformation;
 import org.joml.Matrix4f;
-import org.lwjgl.BufferUtils;
-import sun.reflect.annotation.ExceptionProxy;
 
-import java.nio.FloatBuffer;
 import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -22,7 +18,7 @@ import static org.lwjgl.opengl.GL30.*;
 
 /**
  * Created by Adam on 5/11/16.
- * Handles OpenGL rendering for RubiksGame
+ * Handles OpenGL rendering
  */
 public class Renderer {
 

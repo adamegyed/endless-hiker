@@ -6,6 +6,7 @@ import com.egyed.adam.endlesshiker.engine.graphics.Texture;
 
 /**
  * Created by Adam on 2/4/17.
+ * A piece of ground
  */
 public class GroundChunk extends GameItem {
 

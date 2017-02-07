@@ -8,6 +8,9 @@ import java.nio.ByteBuffer;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
+/**
+ * Handles loading of a texture from a file and holds OpenGL Bindings
+ */
 public class Texture {
 
     private final int id;

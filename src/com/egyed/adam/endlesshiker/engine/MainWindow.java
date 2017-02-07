@@ -6,13 +6,12 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Created by Adam on 5/10/16.
- * Made to handle creating and maintaining a GLFW window
+ * Handle creating and maintaining a GLFW window
  */
 public class MainWindow {
 

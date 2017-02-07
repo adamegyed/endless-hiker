@@ -4,23 +4,16 @@ import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.engine.GameLogic;
 import com.egyed.adam.endlesshiker.engine.MainWindow;
 import com.egyed.adam.endlesshiker.engine.graphics.Camera;
-import com.egyed.adam.endlesshiker.engine.graphics.Mesh;
 import com.egyed.adam.endlesshiker.game.world.World;
-import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
-
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Created by Adam on 2/4/17.
+ * Core game logic
  */
 public class EHGame implements GameLogic {
 
@@ -30,12 +23,14 @@ public class EHGame implements GameLogic {
 
   private Camera camera;
 
+  // Increments are used to store the delta that should be applied to each next physics frame
   private final Vector3f cameraInc;
   private final Vector3f cameraRotInc;
 
   private final Vector2f movementInc;
   private boolean jumpRequested;
 
+  // Modifiers are used to not repeatedly do each action when the key is held
   private boolean wireframe = false;
   private boolean wireframeMod = false;
   private boolean culling = true;
@@ -50,6 +45,7 @@ public class EHGame implements GameLogic {
   private static final float SHIFT_STEP = 3f;
   private static final float MOVEMENT_STEP = 0.2f;
 
+  // Camera defaults
   private static final Vector3f CAMERA_DEFAULT_POS = new Vector3f(0,7f,7f);
   private static final Vector3f CAMERA_DEFAULT_ROT = new Vector3f(45f,0,0);
 

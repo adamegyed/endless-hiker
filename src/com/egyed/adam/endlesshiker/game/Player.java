@@ -7,6 +7,7 @@ import org.joml.Vector2f;
 
 /**
  * Created by Adam on 2/4/17.
+ * Holds player model and defaults for player
  */
 public class Player {
   GameItem model;

@@ -16,7 +16,7 @@ import static org.lwjgl.opengles.GLES20.GL_TEXTURE0;
 /**
  * Created by Adam on 5/16/16.
  * Handles creation and rendering of meshes with a given color
- * Prepares VAO with 3 VBOs to hold Mesh's positions, color, and position index
+ * Prepares VAO with 3 VBOs to hold Mesh's positions, texture cooridinates, and position index
  */
 public class Mesh {
 

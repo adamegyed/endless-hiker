@@ -2,13 +2,13 @@ package com.egyed.adam.endlesshiker.game.world;
 
 import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.game.Player;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by Adam on 2/4/17.
+ * Controls currently loaded GameItems and world interactions
  */
 public class World {
 

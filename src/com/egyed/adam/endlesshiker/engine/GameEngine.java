@@ -3,7 +3,7 @@ package com.egyed.adam.endlesshiker.engine;
 
 /**
  * Created by Adam on 5/10/16.
- * GameEngine manages the fixed-step game loop and interactions between the window and gamelogic
+ * Manages the fixed-step game loop and interactions between the window and gamelogic
  * also manages timings of frame updates (rendering) and game updates (physics and controls)
  * Will split off into another thread if not on Mac
  */

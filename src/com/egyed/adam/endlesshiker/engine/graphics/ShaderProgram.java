@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 /**
  * Created by Adam on 5/12/16.
- * Handles shader program creation and compiation
+ * Handles shader program creation and compilation
  */
 public class ShaderProgram {
 

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 /**
  * Created by Adam on 5/12/16.
+ * Utilities used in the engine
  */
 public class Util {
 
