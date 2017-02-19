@@ -36,35 +36,35 @@ public class World {
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(8.1f,random.nextFloat() * 0.5f,0);
+    ground.setPosition(8.0f,-0.5f /*random.nextFloat() * 0.5f*/,0);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(8.1f,random.nextFloat() * 0.5f,8.1f);
+    ground.setPosition(8.0f,-0.5f /*random.nextFloat() * 0.5f*/,8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(8.1f,random.nextFloat() * 0.5f,-8.1f);
+    ground.setPosition(8.0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(-8.1f,random.nextFloat() * 0.5f,0);
+    ground.setPosition(-8.0f,-0.5f /*random.nextFloat() * 0.5f*/,0);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(-8.1f,random.nextFloat() * 0.5f,8.1f);
+    ground.setPosition(-8.0f,-0.5f /*random.nextFloat() * 0.5f*/,8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(-8.1f,random.nextFloat() * 0.5f,-8.1f);
+    ground.setPosition(-8.0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(0f,random.nextFloat() * 0.5f,8.1f);
+    ground.setPosition(0f,-0.5f /*random.nextFloat() * 0.5f*/,8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(0f,random.nextFloat() * 0.5f,-8.1f);
+    ground.setPosition(0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
     itemList.add(ground);
 
 

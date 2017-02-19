@@ -22,7 +22,7 @@ import static org.lwjgl.opengl.GL30.*;
  */
 public class Renderer {
 
-  private final static float FOV = (float) Math.toRadians(70.0f);
+  private final static float FOV = (float) Math.toRadians(80.0f);
 
   private final static float Z_NEAR = 0.01f;
 

@@ -94,7 +94,7 @@ public class MainWindow {
                 if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
                     glfwSetWindowShouldClose(windowHandle, true);
                 }
-                if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
+                if (key == GLFW_KEY_R && action == GLFW_RELEASE) {
                     shouldCameraReset = true;
                 }
 

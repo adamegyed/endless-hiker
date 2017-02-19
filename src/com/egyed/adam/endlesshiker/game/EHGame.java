@@ -95,7 +95,7 @@ public class EHGame implements GameLogic {
       movementInc.x = MOVEMENT_STEP;
     }
 
-    jumpRequested = mainWindow.isKeyPressed(GLFW_KEY_E);
+    jumpRequested = mainWindow.isKeyPressed(GLFW_KEY_SPACE);
 
 
     if (mainWindow.isKeyPressed(GLFW_KEY_UP)) {
