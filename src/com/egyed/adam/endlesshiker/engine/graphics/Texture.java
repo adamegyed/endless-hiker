@@ -2,7 +2,6 @@ package com.egyed.adam.endlesshiker.engine.graphics;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
-
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
