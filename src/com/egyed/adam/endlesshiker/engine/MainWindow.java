@@ -17,11 +17,10 @@ public class MainWindow {
 
     // Window title
     private String title;
-
+    private WindowOptions opts;
     private int width;
     private int height;
-
-    // Indentifier for GLFW
+    // Identifier for GLFW
     private long windowHandle;
 
     // Window callbacks
@@ -124,11 +123,24 @@ public class MainWindow {
         GL.createCapabilities();
 
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_STENCIL_TEST);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+        if (opts.antialiasing) {
+            glfwWindowHint(GLFW_SAMPLES, 4);
+        }
 
+
+    }
+    public static class WindowOptions {
+        public boolean cullFace;
+        public boolean showTriangles;
+        public boolean showFps;
+        public boolean compatibleProfile;
+        public boolean antialiasing;
+        public boolean frustumCulling;
     }
 
     public void setClearColor(float r, float g, float b, float alpha) {
@@ -183,6 +195,10 @@ public class MainWindow {
         glfwPollEvents();
     }
 
+    public long getWindowHandle() {
+        return windowHandle;
+    }
+
     public boolean getShouldCameraReset() {
         return shouldCameraReset;
     }
@@ -190,4 +206,19 @@ public class MainWindow {
     public void setShouldCameraReset(boolean shouldCameraReset) {
         this.shouldCameraReset = shouldCameraReset;
     }
+
+    public void restoreState() {
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_STENCIL_TEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        if (opts.cullFace) {
+            glEnable(GL_CULL_FACE);
+            glCullFace(GL_BACK);
+        }
+    }
+
+    public WindowOptions getOptions() {
+        return opts;
+    }
+
 }
