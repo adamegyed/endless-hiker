@@ -27,7 +27,8 @@ public class EHGame implements GameLogic {
   private final Vector3f cameraInc;
   private final Vector3f cameraRotInc;
 
-  private final Vector2f movementInc;
+  private final Vector2f playerMovInc;
+  private float playerRotInc;
   private boolean jumpRequested;
 
   // Modifiers are used to not repeatedly do each action when the key is held
@@ -44,10 +45,11 @@ public class EHGame implements GameLogic {
   private static final float CAMERA_ROT_STEP = 2.0f;
   private static final float SHIFT_STEP = 3f;
   private static final float MOVEMENT_STEP = 0.2f;
+  private static final float TURN_STEP = 2.0f;
 
   // Camera defaults
-  private static final Vector3f CAMERA_DEFAULT_POS = new Vector3f(0,7f,7f);
-  private static final Vector3f CAMERA_DEFAULT_ROT = new Vector3f(45f,0,0);
+  private static final Vector3f CAMERA_DEFAULT_POS = new Vector3f(0,7f, -7f);
+  private static final Vector3f CAMERA_DEFAULT_ROT = new Vector3f(45f,180f,0);
 
 
 
@@ -60,7 +62,8 @@ public class EHGame implements GameLogic {
 
     cameraInc = new Vector3f(0,0,0);
     cameraRotInc = new Vector3f(0,0,0);
-    movementInc = new Vector2f(0,0);
+    playerMovInc = new Vector2f(0,0);
+    playerRotInc = 0;
   }
 
 
@@ -81,18 +84,31 @@ public class EHGame implements GameLogic {
 
     cameraInc.set(0, 0, 0);
     cameraRotInc.set(0,0,0);
-    movementInc.set(0,0);
+    playerMovInc.set(0,0);
+    playerRotInc = 0;
 
 
+    if (mainWindow.isKeyPressed(GLFW_KEY_Q)) {
+      // Rotate player left - for now
+      playerRotInc = -TURN_STEP;
+    } else if (mainWindow.isKeyPressed(GLFW_KEY_E)) {
+      // Rotate player right
+      playerRotInc = TURN_STEP;
+    }
     if (mainWindow.isKeyPressed(GLFW_KEY_W)) {
-      movementInc.y = -MOVEMENT_STEP;
+      playerMovInc.y = MOVEMENT_STEP;
     } else if (mainWindow.isKeyPressed(GLFW_KEY_S)) {
-      movementInc.y = MOVEMENT_STEP;
+      playerMovInc.y = -MOVEMENT_STEP;
     }
     if (mainWindow.isKeyPressed(GLFW_KEY_A)) {
-      movementInc.x = -MOVEMENT_STEP;
+      playerMovInc.x = MOVEMENT_STEP;
     } else if (mainWindow.isKeyPressed(GLFW_KEY_D)) {
-      movementInc.x = MOVEMENT_STEP;
+      playerMovInc.x = -MOVEMENT_STEP;
+    }
+
+    //TODO: remove after debugging
+    if (mainWindow.isKeyPressed(GLFW_KEY_7)) {
+      System.out.println("Player y rot: "+world.getPlayer().getRotation().y);
     }
 
     jumpRequested = mainWindow.isKeyPressed(GLFW_KEY_SPACE);
@@ -179,11 +195,17 @@ public class EHGame implements GameLogic {
     }
     */
 
+    Player p = world.getPlayer();
+
     if (jumpRequested) {
-      world.getPlayer().startJump();
+      p.startJump();
     }
-    world.getPlayer().movePlayer(movementInc);
-    world.getPlayer().jumpTick();
+    if (playerRotInc!=0) {
+      p.rotatePlayerY(playerRotInc);
+    }
+    p.movePlayer(playerMovInc);
+    p.tick();
+    world.cameraTick(camera);
 
     if (!slowedCamera) {
       camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);

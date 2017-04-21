@@ -43,7 +43,7 @@ public class Transformation {
     }
 
     public Matrix4f getModelViewMatrix(GameItem gameItem, Matrix4f viewMatrix) {
-        Matrix4f rotation = gameItem.getRotation();
+        Matrix4f rotation = gameItem.getRotationMatrix();
         modelViewMatrix.identity().translate(gameItem.getPosition()).mul(rotation)
                 .scale(gameItem.getScale());
         Matrix4f viewCurr = new Matrix4f(viewMatrix);

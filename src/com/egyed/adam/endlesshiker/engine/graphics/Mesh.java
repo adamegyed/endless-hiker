@@ -31,7 +31,9 @@ public class Mesh {
   private final int vertexCount;
 
   private final Texture texture;
+
   //public Mesh(float[] positions, float[] colours, int[] indices) {
+
   public Mesh(float[] positions, float[] textCoords, int[] indices, Texture texture) {
     this.texture = texture;
     vertexCount = indices.length;

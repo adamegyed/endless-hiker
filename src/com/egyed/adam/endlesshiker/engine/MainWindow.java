@@ -190,4 +190,8 @@ public class MainWindow {
     public void setShouldCameraReset(boolean shouldCameraReset) {
         this.shouldCameraReset = shouldCameraReset;
     }
+
+  public long getWindowHandle() {
+    return windowHandle;
+  }
 }

@@ -1,7 +1,9 @@
 package com.egyed.adam.endlesshiker.game.world;
 
 import com.egyed.adam.endlesshiker.engine.GameItem;
+import com.egyed.adam.endlesshiker.engine.graphics.Camera;
 import com.egyed.adam.endlesshiker.game.Player;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,7 +20,25 @@ public class World {
 
   private GameItem[] gameItems;
 
+  public static final float CAMERA_DISTANCE_FROM_PLAYER = 10f;
+  public static final float CAMERA_PITCH = 45f;
+
+
   public World() {
+
+  }
+
+  public void cameraTick(Camera c) {
+    float horizontalDistance = CAMERA_DISTANCE_FROM_PLAYER * (float) Math.cos(Math.toRadians(CAMERA_PITCH));
+    float verticalDistance = CAMERA_DISTANCE_FROM_PLAYER * (float) Math.sin(Math.toRadians(CAMERA_PITCH));
+
+
+    c.setRotation(CAMERA_PITCH, player.getRotation().y + 180, 0);
+
+    Vector3f playerPosition = player.getGameItem().getPosition();
+    c.setPosition(playerPosition.x + horizontalDistance * (float) Math.sin(Math.toRadians(player.getRotation().y)),
+        playerPosition.y + verticalDistance,
+        playerPosition.z - horizontalDistance * (float) Math.cos(Math.toRadians(player.getRotation().y)));
 
   }
 
