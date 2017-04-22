@@ -60,6 +60,7 @@ public class World {
   public void init() {
     ArrayList<GameItem> itemList = new ArrayList<>(10);
 
+
     Random random = new Random();
     random.setSeed(random.nextLong());
 
