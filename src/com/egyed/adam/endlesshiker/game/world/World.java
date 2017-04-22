@@ -20,25 +20,40 @@ public class World {
 
   private GameItem[] gameItems;
 
-  public static final float CAMERA_DISTANCE_FROM_PLAYER = 10f;
-  public static final float CAMERA_PITCH = 45f;
+  private float cameraDistance;
+  private float cameraPitch;
+  private float cameraAngleAroundPlayer;
 
+  public static final float MAX_CAMERA_PITCH = 90f;
+  public static final float MIN_CAMERA_PITCH = 0f;
+
+  public static final float MIN_CAMERA_DISTANCE = 1.0f;
+  public static final float MAX_CAMERA_DISTANCE = 20f;
+
+  public static final float DEFAULT_CAMERA_DISTANCE = 4f;
+  public static final float DEFAULT_CAMERA_PITCH = 40f;
 
   public World() {
+    cameraAngleAroundPlayer = 0f;
+    cameraPitch = DEFAULT_CAMERA_PITCH;
+    cameraDistance = DEFAULT_CAMERA_DISTANCE;
 
   }
 
   public void cameraTick(Camera c) {
-    float horizontalDistance = CAMERA_DISTANCE_FROM_PLAYER * (float) Math.cos(Math.toRadians(CAMERA_PITCH));
-    float verticalDistance = CAMERA_DISTANCE_FROM_PLAYER * (float) Math.sin(Math.toRadians(CAMERA_PITCH));
+    float horizontalDistance = cameraDistance * (float) Math.cos(Math.toRadians(cameraPitch));
+    float verticalDistance = cameraDistance * (float) Math.sin(Math.toRadians(cameraPitch));
 
 
-    c.setRotation(CAMERA_PITCH, player.getRotation().y + 180, 0);
+    c.setRotation(cameraPitch, player.getRotation().y + 180 + cameraAngleAroundPlayer, 0);
 
     Vector3f playerPosition = player.getGameItem().getPosition();
-    c.setPosition(playerPosition.x + horizontalDistance * (float) Math.sin(Math.toRadians(player.getRotation().y)),
+    c.setPosition(playerPosition.x + horizontalDistance * (float)
+        Math.sin(Math.toRadians(player.getRotation().y + cameraAngleAroundPlayer)),
         playerPosition.y + verticalDistance,
-        playerPosition.z - horizontalDistance * (float) Math.cos(Math.toRadians(player.getRotation().y)));
+        playerPosition.z - horizontalDistance * (float)
+            Math.cos(Math.toRadians(player.getRotation().y +
+            cameraAngleAroundPlayer)));
 
   }
 
@@ -99,5 +114,43 @@ public class World {
   public Player getPlayer() {
     return player;
   }
+
+  public float getCameraAngleAroundPlayer() {
+    return cameraAngleAroundPlayer;
+  }
+
+  public float getCameraPitch() {
+    return cameraPitch;
+  }
+
+  public float getCameraDistance() {
+    return cameraDistance;
+  }
+
+  public void resetWorldCamera() {
+    cameraAngleAroundPlayer = 0f;
+    cameraDistance = DEFAULT_CAMERA_DISTANCE;
+    cameraPitch = DEFAULT_CAMERA_PITCH;
+  }
+
+  public void addCameraPitch(float angle) {
+    cameraPitch += angle;
+    if (cameraPitch > MAX_CAMERA_PITCH) cameraPitch = MAX_CAMERA_PITCH;
+    if (cameraPitch < MIN_CAMERA_PITCH) cameraPitch = MIN_CAMERA_PITCH;
+  }
+
+  public void addAngleAroundPlayer(float angle) {
+    cameraAngleAroundPlayer += angle;
+    if (cameraAngleAroundPlayer > 360) cameraAngleAroundPlayer -= 360f;
+    if (cameraAngleAroundPlayer < 0) cameraAngleAroundPlayer += 360f;
+  }
+
+  public void addCameraDistance(float d) {
+    cameraDistance += d;
+    if (cameraDistance > MAX_CAMERA_DISTANCE) cameraDistance = MAX_CAMERA_DISTANCE;
+    if (cameraDistance < MIN_CAMERA_DISTANCE) cameraDistance = MIN_CAMERA_DISTANCE;
+  }
+
+
 
 }
