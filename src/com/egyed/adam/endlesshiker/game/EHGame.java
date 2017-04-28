@@ -23,6 +23,8 @@ public class EHGame implements GameLogic {
 
   private Camera camera;
 
+  private GameConsole console;
+
   // Increments are used to store the delta that should be applied to each next physics frame - for free camera
   private final Vector3f cameraInc;
   private final Vector3f cameraRotInc;
@@ -78,6 +80,7 @@ public class EHGame implements GameLogic {
     followCameraInc = new Vector3f(0,0,0);
     playerRotInc = 0;
     freeCamera = false;
+    console = new GameConsole();
   }
 
 
@@ -90,6 +93,8 @@ public class EHGame implements GameLogic {
     glClearColor(0.3f, 0.5f, 0.65f, 0.7f);
 
     world.init();
+
+    console.log("Endless Hiker started");
 
   }
 
@@ -121,13 +126,7 @@ public class EHGame implements GameLogic {
       playerMovInc.x = -MOVEMENT_STEP;
     }
 
-    //TODO: remove after debugging
-    if (mainWindow.isKeyPressed(GLFW_KEY_7)) {
-      System.out.println("Player y rot: "+world.getPlayer().getRotation().y);
-    }
-
     jumpRequested = mainWindow.isKeyPressed(GLFW_KEY_SPACE);
-
 
     if (freeCamera) { // Free Camera Controls
       if (mainWindow.isKeyPressed(GLFW_KEY_UP)) {
@@ -180,10 +179,12 @@ public class EHGame implements GameLogic {
 
       if (!freeCamera && !freeCameraMod) {
         freeCamera = true;
+        console.log("Free Camera");
         freeCameraMod = true;
       }
       else if (!freeCameraMod){
         freeCamera = false;
+        console.log("Follow Camera");
         world.resetWorldCamera();
         freeCameraMod = true;
       }
@@ -197,11 +198,13 @@ public class EHGame implements GameLogic {
       if (!wireframe && !wireframeMod) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         wireframe = true;
+        console.log("Wireframe mode enabled");
         wireframeMod = true;
       }
       else if (!wireframeMod){
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         wireframe = false;
+        console.log("Wireframe mode disabled");
         wireframeMod = true;
       }
     }
@@ -214,11 +217,13 @@ public class EHGame implements GameLogic {
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
         culling = true;
+        console.log("Face culling enabled");
         cullingMod = true;
       }
       else if (!cullingMod) {
         glDisable(GL_CULL_FACE);
         culling = false;
+        console.log("Face culling disabled");
         cullingMod = true;
       }
     }
@@ -301,6 +306,7 @@ public class EHGame implements GameLogic {
     for (GameItem gameItem : world.getGameItems()) {
       if (gameItem!=null) gameItem.getMesh().cleanUp();
     }
+    console.log("Endless Hiker closed");
   }
 
   private void resetCamera() {

@@ -30,7 +30,7 @@ public class World {
   public static final float MIN_CAMERA_DISTANCE = 1.0f;
   public static final float MAX_CAMERA_DISTANCE = 20f;
 
-  public static final float DEFAULT_CAMERA_DISTANCE = 4f;
+  public static final float DEFAULT_CAMERA_DISTANCE = 5f;
   public static final float DEFAULT_CAMERA_PITCH = 40f;
 
   public World() {

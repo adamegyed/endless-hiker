@@ -17,6 +17,7 @@ public class HeightMapMesh {
   private final float minY;
   private final float maxY;
   private final Mesh mesh;
+  
   public HeightMapMesh(float minY, float maxY, String heightMapFile, String textureFile, int textInc) throws Exception {
     this.minY = minY;
     this.maxY = maxY;
