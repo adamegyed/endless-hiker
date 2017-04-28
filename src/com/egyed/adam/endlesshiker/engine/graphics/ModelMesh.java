@@ -32,7 +32,7 @@ public class ModelMesh {
             try {
                 colour = DEFAULT_COLOUR;
                 vertexCount = indices.length;
-                vboIdList = new ArrayList();
+                vboIdList = new ArrayList<>();
 
                 vaoId = glGenVertexArrays();
                 glBindVertexArray(vaoId);

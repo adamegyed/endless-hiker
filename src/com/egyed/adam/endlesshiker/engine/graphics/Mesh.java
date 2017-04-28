@@ -3,6 +3,7 @@ package com.egyed.adam.endlesshiker.engine.graphics;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
 
@@ -20,19 +21,17 @@ import static org.lwjgl.opengles.GLES20.GL_TEXTURE0;
  */
 public class Mesh {
 
+  private static final Vector3f DEFAULT_COLOUR = new Vector3f(1.0f, 1.0f, 1.0f);
+
   private final int vaoId;
 
   private final int posVboId;
-
-  //private final int colourVboId;
 
   private final int idxVboId;
 
   private final int vertexCount;
 
   private final Texture texture;
-
-  //public Mesh(float[] positions, float[] colours, int[] indices) {
 
   public Mesh(float[] positions, float[] textCoords, int[] indices, Texture texture) {
     this.texture = texture;

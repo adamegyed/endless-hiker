@@ -79,7 +79,7 @@ public class Player {
     return rotation;
   }
 
-  private GameItem makeCube() {
+  public static GameItem makeCube() {
 
     float[] positions = new float[] {
 

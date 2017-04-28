@@ -103,6 +103,8 @@ public class World {
     ground.setPosition(0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
     itemList.add(ground);
 
+    itemList.add(Player.makeCube());
+
 
     gameItems = new GameItem[itemList.size()];
     gameItems = itemList.toArray(gameItems);
