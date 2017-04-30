@@ -12,8 +12,8 @@ import org.joml.Vector3f;
  */
 public class HeightMapMesh {
   private static final int MAX_COLOUR = 255 * 255 * 255;
-  private static final float STARTX = -0.5f;
-  private static final float STARTZ = -0.5f;
+  private static final float STARTX = -1f;
+  private static final float STARTZ = -1f;
   private final float minY;
   private final float maxY;
   private final Mesh mesh;
@@ -22,7 +22,7 @@ public class HeightMapMesh {
     this.minY = minY;
     this.maxY = maxY;
 
-    PNGDecoder decoder = new PNGDecoder(getClass().getResourceAsStream(heightMapFile));
+    PNGDecoder decoder = new PNGDecoder(this.getClass().getResourceAsStream(heightMapFile));
     int height = decoder.getHeight();
     int width = decoder.getWidth();
     ByteBuffer buf = ByteBuffer.allocateDirect(
@@ -163,5 +163,9 @@ public class HeightMapMesh {
     int argb = ((0xFF & a) << 24) | ((0xFF & r) << 16)
         | ((0xFF & g) << 8) | (0xFF & b);
     return this.minY + Math.abs(this.maxY - this.minY) * ((float) argb / (float) MAX_COLOUR);
+  }
+
+  public Mesh getMesh() {
+    return mesh;
   }
 }

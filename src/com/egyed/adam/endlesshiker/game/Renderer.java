@@ -94,6 +94,7 @@ public class Renderer {
     Arrays.stream(gameItems).forEach( gameItem -> {
 
       // Set model view matrix for this item
+      if (gameItem==null) return;
       Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
       shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
       // Render the mes for this game item

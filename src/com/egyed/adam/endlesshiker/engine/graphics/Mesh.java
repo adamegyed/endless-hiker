@@ -2,6 +2,8 @@ package com.egyed.adam.endlesshiker.engine.graphics;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
@@ -25,6 +27,8 @@ public class Mesh {
 
   private final int vaoId;
 
+  private final List<Integer> vboIdList;
+
   private final int posVboId;
 
   private final int idxVboId;
@@ -40,6 +44,8 @@ public class Mesh {
     vaoId = glGenVertexArrays();
     glBindVertexArray(vaoId);
 
+    vboIdList = new LinkedList<>();
+
     // Position VBO
     posVboId = glGenBuffers();
     FloatBuffer posBuffer = BufferUtils.createFloatBuffer(positions.length);
@@ -48,15 +54,8 @@ public class Mesh {
     glBindBuffer(GL_ARRAY_BUFFER, posVboId);
     glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-        /*
-        // Colour VBO - Commented out when working on texture - Nishan
-        colourVboId = glGenBuffers();
-        FloatBuffer colourBuffer = BufferUtils.createFloatBuffer(colours.length);
-        colourBuffer.put(colours).flip();
-        glBindBuffer(GL_ARRAY_BUFFER, colourVboId);
-        glBufferData(GL_ARRAY_BUFFER, colourBuffer, GL_STATIC_DRAW);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
-        */
+
+
     //Texture VBO
     int vboId = glGenBuffers();
     textCoordsBuffer = MemoryUtil.memAllocFloat(textCoords.length);

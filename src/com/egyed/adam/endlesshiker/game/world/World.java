@@ -2,7 +2,9 @@ package com.egyed.adam.endlesshiker.game.world;
 
 import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.engine.graphics.Camera;
+import com.egyed.adam.endlesshiker.engine.graphics.HeightMapMesh;
 import com.egyed.adam.endlesshiker.game.Player;
+import com.egyed.adam.endlesshiker.game.worldgen.HeightMapGenerator;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -67,47 +69,88 @@ public class World {
     player = new Player();
     itemList.add(player.getGameItem());
 
+    HeightMapMesh heightMap = null;
 
-    ground = GroundChunk.createFlat();
+    int blocksPerRow = 1;
+
+    float scale = 50;
+
+    System.out.println("Just Before WorldGen");
+
+    //HeightMapGenerator.genMap(new Random().nextLong());
+
+    System.out.println("Finished world gen");
+
+    try {
+      heightMap = new HeightMapMesh(0.0f, 0.30f, "/save/map.png",
+          "/res/texture/grasstile.png", 4);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(-1);
+    }
+
+    GameItem[] terrainItems = new GameItem[blocksPerRow * blocksPerRow];
+
+    for (int row = 0; row < blocksPerRow; row++) {
+      for (int col = 0; col < blocksPerRow; col++) {
+        float xDisplacement = (col - ((float) blocksPerRow - 1) / (float) 2) * scale * HeightMapMesh.getXLength();
+        float zDisplacement = (row - ((float) blocksPerRow - 1) / (float) 2) * scale * HeightMapMesh.getZLength();
+
+        GameItem terrainBlock = new GameItem(heightMap.getMesh());
+        terrainBlock.setScale(scale);
+        terrainBlock.setPosition(xDisplacement, 10, zDisplacement);
+        terrainItems[row * blocksPerRow + col] = terrainBlock;
+      }
+    }
+
+    /*ground = GroundChunk.createFlat();
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(8.0f,-0.5f /*random.nextFloat() * 0.5f*/,0);
+    ground.setPosition(8.0f,-0.5f *//*random.nextFloat() * 0.5f*//*,0);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(8.0f,-0.5f /*random.nextFloat() * 0.5f*/,8.0f);
+    ground.setPosition(8.0f,-0.5f *//*random.nextFloat() * 0.5f*//*,8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(8.0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
+    ground.setPosition(8.0f,-0.5f *//*random.nextFloat() * 0.5f*//*,-8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(-8.0f,-0.5f /*random.nextFloat() * 0.5f*/,0);
+    ground.setPosition(-8.0f,-0.5f *//*random.nextFloat() * 0.5f*//*,0);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(-8.0f,-0.5f /*random.nextFloat() * 0.5f*/,8.0f);
+    ground.setPosition(-8.0f,-0.5f *//*random.nextFloat() * 0.5f*//*,8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(-8.0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
+    ground.setPosition(-8.0f,-0.5f *//*random.nextFloat() * 0.5f*//*,-8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(0f,-0.5f /*random.nextFloat() * 0.5f*/,8.0f);
+    ground.setPosition(0f,-0.5f *//*random.nextFloat() * 0.5f*//*,8.0f);
     itemList.add(ground);
 
     ground = GroundChunk.createFlat();
-    ground.setPosition(0f,-0.5f /*random.nextFloat() * 0.5f*/,-8.0f);
+    ground.setPosition(0f,-0.5f *//*random.nextFloat() * 0.5f*//*,-8.0f);
     itemList.add(ground);
 
-    itemList.add(Player.makeCube());
+    itemList.add(Player.makeCube());*/
 
 
-    gameItems = new GameItem[itemList.size()];
+
+    gameItems = new GameItem[itemList.size()+terrainItems.length];
+
     gameItems = itemList.toArray(gameItems);
+
+    for (int i = itemList.size(); i < gameItems.length; i++) {
+      gameItems[i] = terrainItems[i-itemList.size()];
+    }
+
+
   }
 
   public GameItem[] getGameItems() {
