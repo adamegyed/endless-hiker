@@ -159,9 +159,9 @@ public class EHGame implements GameLogic {
       } else if (mainWindow.isKeyPressed(GLFW_KEY_RIGHT)) {
         cameraInc.x = 1;
       }
-      if (mainWindow.isKeyPressed(GLFW_KEY_Z)) {
+      if (mainWindow.isKeyPressed(GLFW_KEY_X)) {
         cameraInc.y = -1;
-      } else if (mainWindow.isKeyPressed(GLFW_KEY_X)) {
+      } else if (mainWindow.isKeyPressed(GLFW_KEY_Z)) {
         cameraInc.y = 1;
       }
       if (mainWindow.isKeyPressed(GLFW_KEY_N)) {
