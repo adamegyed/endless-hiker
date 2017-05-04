@@ -62,15 +62,19 @@ public class Player {
       inJump = true;
     }
   }
-  public void tick() {
+  public void physicsTick(float clipHeight) {
     if (inJump) {
       model.getPosition().y += vVelocity;
       vVelocity -= 0.08f;
-      if (model.getPosition().y<0) {
+      if (model.getPosition().y < clipHeight) {
         inJump = false;
-        model.getPosition().y = 0;
+        model.getPosition().y = clipHeight;
       }
     }
+    else {
+     model.getPosition().y = clipHeight;
+    }
+
 
     model.setRotation(rotation);
   }

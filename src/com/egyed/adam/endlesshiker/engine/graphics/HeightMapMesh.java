@@ -18,6 +18,62 @@ public class HeightMapMesh {
   private final float maxY;
   private final Mesh mesh;
 
+  public HeightMapMesh(float minY, float maxY, float[][] heightMap, String textureFile, int textInc) throws Exception {
+    this.minY = minY;
+    this.maxY = maxY;
+
+
+    int height = heightMap.length;
+    int width = heightMap[0].length;
+
+    Texture texture = new Texture(textureFile);
+
+    float incx = getXLength() / (width - 1);
+    float incz = getZLength() / (height - 1);
+
+    List<Float> positions = new ArrayList<>();
+    List<Float> textCoords = new ArrayList<>();
+    List<Integer> indices = new ArrayList<>();
+
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        // Create vertex for current position
+        positions.add(STARTX + col * incx); // x
+        float yHeight = this.minY + Math.abs(this.maxY - this.minY) * heightMap[row][col] * 0.5f;
+        positions.add(yHeight); //y
+        positions.add(STARTZ + row * incz); //z
+
+        // Set texture coordinates
+        textCoords.add((float) textInc * (float) col / (float) width);
+        textCoords.add((float) textInc * (float) row / (float) height);
+
+        // Create indices
+        if (col < width - 1 && row < height - 1) {
+          int leftTop = row * width + col;
+          int leftBottom = (row + 1) * width + col;
+          int rightBottom = (row + 1) * width + col + 1;
+          int rightTop = row * width + col + 1;
+
+          indices.add(leftTop);
+          indices.add(leftBottom);
+          indices.add(rightTop);
+
+          indices.add(rightTop);
+          indices.add(leftBottom);
+          indices.add(rightBottom);
+        }
+      }
+    }
+
+    float[] posArr = Util.listToArray(positions);
+    int[] indicesArr = indices.stream().mapToInt(i -> i).toArray();
+    float[] textCoordsArr = Util.listToArray(textCoords);
+    float[] normalsArr = calcNormals(posArr, width, height);
+    this.mesh = new Mesh(posArr, textCoordsArr, indicesArr, texture);
+    //Material material = new Material(texture, 0.0f);
+    //mesh.setMaterial(material);
+  }
+
   public HeightMapMesh(float minY, float maxY, String heightMapFile, String textureFile, int textInc) throws Exception {
     this.minY = minY;
     this.maxY = maxY;

@@ -4,9 +4,14 @@ import com.egyed.adam.endlesshiker.engine.GameItem;
 import com.egyed.adam.endlesshiker.engine.GameLogic;
 import com.egyed.adam.endlesshiker.engine.MainWindow;
 import com.egyed.adam.endlesshiker.engine.graphics.Camera;
+import com.egyed.adam.endlesshiker.engine.graphics.HeightMapMesh;
 import com.egyed.adam.endlesshiker.game.world.World;
+import com.egyed.adam.endlesshiker.game.worldgen.HeightMapGenerator;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+
+import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -49,8 +54,21 @@ public class EHGame implements GameLogic {
   private boolean slowedCamera;
   private boolean slowedCameraMod;
 
+  private boolean isNoiseRunning = false;
+  private boolean isNoiseComplete = false;
+  private boolean noiseMod = false;
+
+  public final Object worldGeneratorLockObject = new Object();
+
+  private Thread worldGeneratorThread = null;
+
+  private float[][] heights = null;
+
+  private boolean collisions = false;
+  private boolean collisionsMod = false;
+
   // Distances each should move per step
-  private static final float CAMERA_POS_STEP = 0.05f;
+  private static final float CAMERA_POS_STEP = 0.5f;
   private static final float CAMERA_ROT_STEP = 2.0f;
   private static final float SHIFT_STEP = 3f;
   private static final float MOVEMENT_STEP = 0.2f;
@@ -90,11 +108,13 @@ public class EHGame implements GameLogic {
 
     resetCamera();
 
-    glClearColor(0.3f, 0.5f, 0.65f, 0.7f);
+    //glClearColor(0.3f, 0.5f, 0.65f, 0.7f);
 
     world.init();
 
     console.log("Endless Hiker started");
+
+    startWorldGen();
 
   }
 
@@ -229,6 +249,20 @@ public class EHGame implements GameLogic {
     }
     else if (mainWindow.isKeyReleased(GLFW_KEY_U)) cullingMod = false;
 
+    if (mainWindow.isKeyPressed(GLFW_KEY_C)) {
+      if (!collisions && !collisionsMod) {
+        collisions = true;
+        console.log("Collisions enabled");
+        collisionsMod = true;
+      }
+      else if (!collisionsMod) {
+        collisions = false;
+        console.log("Collisions disabled");
+        collisionsMod = true;
+      }
+    }
+    else if (mainWindow.isKeyReleased(GLFW_KEY_C)) collisionsMod = false;
+
     if (mainWindow.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
       if (!slowedCameraMod) {
         slowedCamera = !slowedCamera;
@@ -237,6 +271,22 @@ public class EHGame implements GameLogic {
 
     }
     else if (mainWindow.isKeyReleased(GLFW_KEY_LEFT_SHIFT)) slowedCameraMod = false;
+
+    //if (mainWindow.isKeyPressed(GLFW_KEY_7)) world.printTerrainSize();
+    /* if (mainWindow.isKeyPressed(GLFW_KEY_7)) {
+      System.out.println("Player x: "+world.getPlayer().getGameItem().getPosition().x+" y: "+world.getPlayer().getGameItem().getPosition().z);
+    } */
+    // Terrain Generation
+
+    if (mainWindow.isKeyPressed(GLFW_KEY_TAB) && !noiseMod) {
+      if (!isNoiseRunning) {
+        console.log("World Generation Started.");
+        startWorldGen();
+      }
+    }
+    if (mainWindow.isKeyReleased(GLFW_KEY_TAB)) {
+      noiseMod = false;
+    }
 
     if (mainWindow.getShouldCameraReset()) {
       if (freeCamera) {
@@ -247,6 +297,14 @@ public class EHGame implements GameLogic {
       }
       mainWindow.setShouldCameraReset(false);
     }
+  }
+
+  private void startWorldGen() {
+    worldGeneratorThread = new Thread(
+        new HeightMapGenerator.WorldGenOffloader(new Random().nextLong(), this));
+    worldGeneratorThread.start();
+    isNoiseRunning = true;
+    noiseMod = true;
   }
 
   @Override
@@ -269,7 +327,9 @@ public class EHGame implements GameLogic {
       p.rotatePlayerY(playerRotInc);
     }
     p.movePlayer(playerMovInc);
-    p.tick();
+    if (collisions) p.physicsTick(world.getHeight(p.getGameItem().getPosition())*0.1f-1);
+    else p.physicsTick(0);
+
     if (freeCamera) {
       if (!slowedCamera) {
         camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
@@ -288,7 +348,15 @@ public class EHGame implements GameLogic {
       world.cameraTick(camera);
     }
 
-
+    synchronized (worldGeneratorLockObject) {
+      if (isNoiseComplete) {
+        console.log("World Generation Complete, Loading..");
+        isNoiseComplete = false;
+        isNoiseRunning = false;
+        world.regenerateTerrain(heights);
+        heights = null;
+      }
+    }
 
 
   }
@@ -296,7 +364,8 @@ public class EHGame implements GameLogic {
   @Override
   public void render(MainWindow mainWindow) {
 
-    renderer.render(mainWindow, camera, world.getGameItems());
+    renderer.render(mainWindow, camera, world.getMergingIterator());
+    world.resetIterator();
 
   }
 
@@ -312,6 +381,13 @@ public class EHGame implements GameLogic {
   private void resetCamera() {
     camera.setPosition(CAMERA_DEFAULT_POS);
     camera.setRotation(CAMERA_DEFAULT_ROT);
+  }
+
+  public void finishLoadingWorld(float[][] heights) {
+    synchronized (worldGeneratorLockObject) {
+      isNoiseComplete = true;
+      this.heights = heights;
+    }
   }
 
 }

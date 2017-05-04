@@ -10,6 +10,7 @@ import com.egyed.adam.endlesshiker.engine.graphics.Transformation;
 import org.joml.Matrix4f;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -65,7 +66,7 @@ public class Renderer {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
   }
 
-  public void render(MainWindow window, Camera camera, GameItem[] gameItems) {
+  public void render(MainWindow window, Camera camera, Iterator<GameItem> gameItemIterator) {
     clear();
 
     if ( window.isResized() ) {
@@ -91,6 +92,20 @@ public class Renderer {
     // Render each gameItem
     // Rendering is normally very cpu-intensive, so it is paralleled with a foreach over a stream of the gameItems
 
+    while (gameItemIterator.hasNext()) {
+      GameItem gameItem = gameItemIterator.next();
+      if (gameItem==null) continue;
+
+      // Set model view matrix for this item
+      Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
+      shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+      // Render the mes for this game item
+      gameItem.getMesh().render();
+
+    }
+
+
+    /*
     Arrays.stream(gameItems).forEach( gameItem -> {
 
       // Set model view matrix for this item
@@ -100,6 +115,7 @@ public class Renderer {
       // Render the mes for this game item
       gameItem.getMesh().render();
     });
+    */
 
 
     shaderProgram.unbind();

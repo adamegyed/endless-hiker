@@ -126,6 +126,8 @@ public class MainWindow {
     glEnable(GL_STENCIL_TEST);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
+
+    glfwSetInputMode(windowHandle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
