@@ -114,7 +114,7 @@ public class EHGame implements GameLogic {
 
     console.log("Endless Hiker started");
 
-    startWorldGen();
+    //startWorldGen();
 
   }
 
@@ -312,11 +312,10 @@ public class EHGame implements GameLogic {
 
     // Trippy mode
     /*
-    for (GameItem gameItem : world.getGameItems()) {
+    for (GameItem gameItem : world.getGround()) {
       gameItem.addRotation(0.5f, 0.5f, 0.5f);
     }
     */
-
 
     Player p = world.getPlayer();
 
@@ -327,7 +326,7 @@ public class EHGame implements GameLogic {
       p.rotatePlayerY(playerRotInc);
     }
     p.movePlayer(playerMovInc);
-    if (collisions) p.physicsTick(world.getHeight(p.getGameItem().getPosition())*0.1f-1);
+    if (collisions) p.physicsTick(world.getHeight(p.getGameItem().getPosition())*0.08f-1);
     else p.physicsTick(0);
 
     if (freeCamera) {

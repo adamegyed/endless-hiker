@@ -323,5 +323,7 @@ public class World {
     return z;
   }
 
-
+  public LinkedList<GameItem> getGround() {
+    return ground;
+  }
 }
