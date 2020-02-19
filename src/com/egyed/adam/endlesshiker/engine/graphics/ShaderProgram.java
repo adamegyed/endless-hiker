@@ -118,7 +118,7 @@ public class ShaderProgram {
         uniforms.put(uniformName, uniformLocation);
     }
 
-    private static Object glUniformMatrixLockObject = new Object();
+    private static final Object glUniformMatrixLockObject = new Object();
 
     public void setUniform(String uniformName, Matrix4f value) {
         // Put matrix into a FloatBuffer
